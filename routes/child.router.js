@@ -1,4 +1,5 @@
 const express = require ('express');
+const { Mongoose } = require('mongoose');
 const router = express.Router();
 
 const Child = require ('./../models/child.model');
@@ -52,6 +53,55 @@ router.get('/child/:id', (req, res, next) =>{
               .status(400)
               .json(err)
             });
+})
+
+// PUT '/api/child/:id edit child by id
+router.get('/child/:id', (req,res,next) =>{
+    const {id} = req.params;
+    const {name, image, age, parents, parents_mail, parents_phone} = req.body;
+    
+    if (!Mongoose.Types.ObjectId.isValid(id) ) {
+        res
+          .status(400)
+          .json({message: 'Specified child id is not valid'} );
+          return;
+    }
+
+    Child.findByIdAndUpdate(id, {name, image, age, parents, parents_mail, parents_phone})
+        .then(() =>{
+            res
+              .status(200)
+              .send();
+        })
+        .catch((err) =>{
+            res
+              .status(400)
+              .json(err);
+        })
+});
+
+//DELETE '.api/child/:id' delete an specific child
+router.delete('/child/:id', (req, res) =>{
+    const {id} = req.params;
+
+    if(!Mongoose.Types.ObjectId.isValid(id) ) {
+        res
+          .status(400)
+          .json({message: 'Specified child id is not valid'});
+          return;
+    }
+
+    Child.findByIdAndRemove(id)
+        .then(() =>{
+            res
+              .status(202)
+              .send('Child ${id} was removed successfully');
+        })
+        .catch( err => {
+            res
+              .status(400)
+              .json(err);
+        })
 })
 
 module.exports = router;
