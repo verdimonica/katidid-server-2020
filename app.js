@@ -11,6 +11,7 @@ require('dotenv').config();
 
 const authRouter = require('./routes/auth.router');
 const childRouter = require('./routes/child.router');
+const parentRouter = require('./routes/parent.router');
 
 // MONGOOSE CONNECTION
 mongoose
@@ -61,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ROUTER MIDDLEWARE
 app.use('/auth', authRouter);
 app.use('/api', childRouter);
+app.use('/api', parentRouter);
 
 
 // ERROR HANDLING

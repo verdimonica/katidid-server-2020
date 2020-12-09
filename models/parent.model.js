@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 //create schema
 const parentSchema = new Schema ({
-    name: {type: String, unique: true, required: true},
+    name: {type: String, required: true},
     email: {type: String, unique: true, required: true},
-    phone: {type: String, unique: true, required: true},
+    phone: {type: String, required: true},
     child: {type: Schema.Types.ObjectId, ref: "Child"}
 })
 

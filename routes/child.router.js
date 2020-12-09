@@ -1,5 +1,5 @@
 const express = require ('express');
-const {Mongoose} = require('mongoose');
+const mongoose = require('mongoose');
 const router = express.Router();
 
 const Child = require ('./../models/child.model');
@@ -17,6 +17,21 @@ router.post('/child', (req, res, next) => {
             res
               .status(400)
               .json(err)
+        });
+})
+
+router.post('/events', (req, res, next) => {
+    const {pampersBrown, pampersBlue, nap,meal,comment, date} = req.body;
+    Child.create({events:[{pampersBrown, pampersBlue, nap,meal,comment, date}]} )
+        .then((createdEvent) =>{
+            res
+                .status(201)
+                .json(createdEvent);
+        } )
+        .catch((err) =>{
+            res
+                .status(400)
+                .json(err)
         });
 })
 
@@ -56,22 +71,22 @@ router.get('/child/:id', (req, res, next) =>{
 })
 
 // PUT '/api/child/:id edit child by id
-router.get('/child/:id', (req,res,next) =>{
+router.put('/child/:id', (req, res, next) =>{
     const {id} = req.params;
     const {name, image, age, parents, parents_mail, parents_phone} = req.body;
     
-    if (!Mongoose.Types.ObjectId.isValid(id) ) {
+    if (!mongoose.Types.ObjectId.isValid(id) ) {
         res
           .status(400)
           .json({message: 'Specified child id is not valid'} );
           return;
     }
 
-    Child.findByIdAndUpdate(id, {name, image, age, parents, parents_mail, parents_phone})
-        .then(() =>{
+    Child.findByIdAndUpdate(id, {name, image, age, parents, parents_mail, parents_phone}, {new:true})
+        .then((child) =>{
             res
               .status(200)
-              .send();
+              .json(child);
         })
         .catch((err) =>{
             res
@@ -80,11 +95,11 @@ router.get('/child/:id', (req,res,next) =>{
         })
 });
 
-//DELETE '.api/child/:id' delete an specific child
+//DELETE '.api/childs/:id' delete an specific child
 router.delete('/child/:id', (req, res) =>{
     const {id} = req.params;
 
-    if(!Mongoose.Types.ObjectId.isValid(id) ) {
+    if(!mongoose.Types.ObjectId.isValid(id) ) {
         res
           .status(400)
           .json({message: 'Specified child id is not valid'});
@@ -95,7 +110,7 @@ router.delete('/child/:id', (req, res) =>{
         .then(() =>{
             res
               .status(202)
-              .send('Child ${id} was removed successfully');
+              .send(`Child ${id} was removed successfully`);
         })
         .catch( err => {
             res
