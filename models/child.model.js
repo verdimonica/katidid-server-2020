@@ -21,7 +21,7 @@ const childSchema = new Schema ({
 })
 
 //create model
-const Chid = mongoose.model('Child', childSchema);
+const Child = mongoose.model('Child', childSchema);
 
 
 //export model
