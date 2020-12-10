@@ -4,7 +4,7 @@ const router = express.Router();
 
 const Parent = require('./../models/parent.model');
 
-//POST '/api/parents' create a parent card
+//POST create a parent card
 router.post('/parent', (req, res, next) =>{
     const {name, email, phone, childId} = req.body;
     Parent.create({name, email, phone, childId})
@@ -20,7 +20,7 @@ router.post('/parent', (req, res, next) =>{
         });
 })
 
-// PUT '/api/parents/:id edit parent by id
+// PUT  edit parent by id
 router.put('/parent/:id', (req, res, next) =>{
     const {id} = req.params;
     const {name, email, phone, childId} = req.body;
@@ -45,7 +45,7 @@ router.put('/parent/:id', (req, res, next) =>{
         })
 });
 
-//DELETE '.api/parents/:id' delete an specific parent
+//DELETE delete an specific parent
 router.delete('/parent/:id', (req, res) =>{
     const {id} = req.params;
 

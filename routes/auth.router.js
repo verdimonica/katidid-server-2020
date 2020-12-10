@@ -14,7 +14,7 @@ const {
 
 // POST '/auth/signup'
 router.post('/signup', isNotLoggedIn, validationLogin, (req, res, next) => {
-  const { email, password } = req.body;
+  const { name, email, phone, password, userType } = req.body;
 
   User.findOne({ email })
     .then( (foundUser) => {
@@ -27,8 +27,8 @@ router.post('/signup', isNotLoggedIn, validationLogin, (req, res, next) => {
         // If email is available, go and create a new user
         const salt = bcrypt.genSaltSync(saltRounds);
         const encryptedPassword = bcrypt.hashSync(password, salt);
-
-        User.create( { email, password: encryptedPassword })
+        
+        User.create( { name, email, phone, password: encryptedPassword, userType, children:[]})
           .then( (createdUser) => {
             // set the `req.session.currentUser` using newly created user object, to trigger creation of the session and cookie
             createdUser.password = "*";

@@ -1,6 +1,9 @@
 const mongoose = require ('mongoose');
 const Schema = mongoose.Schema;
 
+const events = require('./../schemas/eventSchema');
+
+
 //create schema
 const childSchema = new Schema ({
     image: {type: String},
@@ -8,17 +11,10 @@ const childSchema = new Schema ({
     age: {type: Number, required: true},
     parents_mail: {type: String, unique: true},
     parents_phone: {type: String, unique: true},
-    events: [
-        {
-        pampersBrown: { type:  Boolean},
-        pampersBlue: { type: Boolean},
-        nap: { type: Boolean},
-        meal: { type: Boolean},
-        comment: { type: String },
-        date: {type: Date, default: Date.now}
-        }
-    ]
+    parent: {type: Schema.Types.ObjectId, ref:"User"},
+    events: [events]
 })
+
 
 //create model
 const Child = mongoose.model('Child', childSchema);

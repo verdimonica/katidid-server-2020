@@ -6,8 +6,8 @@ const Child = require ('./../models/child.model');
 
 //Post '/api/child' to create a child card
 router.post('/child', (req, res, next) => {
-    const {name, image, age, parents, parents_mail, parents_phone} = req.body;
-    Child.create({name, image, age, parents, parents_mail, parents_phone, events:[]} )
+    const {name, image, age, parent, parents_mail, parents_phone} = req.body;
+    Child.create({name, image, age, parent, parents_mail, parents_phone, events:[]} )
         .then((createdChild) =>{
             res
               .status(201)
@@ -20,22 +20,7 @@ router.post('/child', (req, res, next) => {
         });
 })
 
-router.post('/events', (req, res, next) => {
-    const {pampersBrown, pampersBlue, nap,meal,comment, date} = req.body;
-    Child.create({events:[{pampersBrown, pampersBlue, nap,meal,comment, date}]} )
-        .then((createdEvent) =>{
-            res
-                .status(201)
-                .json(createdEvent);
-        } )
-        .catch((err) =>{
-            res
-                .status(400)
-                .json(err)
-        });
-})
-
-//GET '/api/child' returns all children for currently logged in teacher
+//GET  all children for currently logged in teacher
 router.get('/child', (req, res, next) =>{
     Child
     .find()
@@ -52,7 +37,7 @@ router.get('/child', (req, res, next) =>{
     });
 })
 
-//GET '/api/child/:id' shows specific child
+//GET shows specific child
 router.get('/child/:id', (req, res, next) =>{
     const {id} = req.params;
     Child
@@ -70,7 +55,7 @@ router.get('/child/:id', (req, res, next) =>{
             });
 })
 
-// PUT '/api/child/:id edit child by id
+// PUT edit child by id
 router.put('/child/:id', (req, res, next) =>{
     const {id} = req.params;
     const {name, image, age, parents, parents_mail, parents_phone} = req.body;
@@ -95,7 +80,7 @@ router.put('/child/:id', (req, res, next) =>{
         })
 });
 
-//DELETE '.api/childs/:id' delete an specific child
+//DELETE an specific child
 router.delete('/child/:id', (req, res) =>{
     const {id} = req.params;
 
