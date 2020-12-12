@@ -5,11 +5,11 @@ const Schema = mongoose.Schema;
 const childSchema = new Schema ({
     image: {type: String},
     name: {type: String, required: true},
-    age: {type: Number, required: true},
-    parents_mail: {type: String, unique: true},
-    parents_phone: {type: String, unique: true},
-    parent: {type: Schema.Types.ObjectId, ref:"User"},
-    events: [{type: Schema.Types.ObjectId, ref:"Events"}]
+    surname: {type: String, required: true},
+    months: {type: Number, required: true},
+    parentsMail: {type: String, unique: true},
+    parentsPhone: {type: String, unique: true},
+    parent: {type: Schema.Types.ObjectId, ref:"User"}
 })
 
 

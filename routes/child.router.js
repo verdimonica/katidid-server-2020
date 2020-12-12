@@ -5,9 +5,9 @@ const router = express.Router();
 const Child = require ('./../models/child.model');
 
 //Post '/api/child' to create a child card
-router.post('/child', (req, res, next) => {
-    const {name, image, age, parent, parents_mail, parents_phone} = req.body;
-    Child.create({name, image, age, parent, parents_mail, parents_phone, events:[]} )
+router.post('/child', (req, res) => {
+    const {name, surname, image, months, parentsMail, parentsPhone} = req.body;
+    Child.create({name, surname, image, months, parentsMail, parentsPhone} )
         .then((createdChild) =>{
             res
               .status(201)
@@ -21,7 +21,7 @@ router.post('/child', (req, res, next) => {
 })
 
 //GET  all children for currently logged in teacher
-router.get('/child', (req, res, next) =>{
+router.get('/child', (req, res) =>{
     Child
     .find()
     .populate('events')
@@ -38,7 +38,7 @@ router.get('/child', (req, res, next) =>{
 })
 
 //GET shows specific child
-router.get('/child/:id', (req, res, next) =>{
+router.get('/child/:id', (req, res) =>{
     const {id} = req.params;
     Child
         .findById(id)
@@ -56,9 +56,9 @@ router.get('/child/:id', (req, res, next) =>{
 })
 
 // PUT edit child by id
-router.put('/child/:id', (req, res, next) =>{
+router.put('/child/:id', (req, res) =>{
     const {id} = req.params;
-    const {name, image, age, parents, parents_mail, parents_phone} = req.body;
+    const {name, surname, image, months, parents, parentsMail, parentsPhone} = req.body;
     
     if (!mongoose.Types.ObjectId.isValid(id) ) {
         res
@@ -67,7 +67,7 @@ router.put('/child/:id', (req, res, next) =>{
           return;
     }
 
-    Child.findByIdAndUpdate(id, {name, image, age, parents, parents_mail, parents_phone}, {new:true})
+    Child.findByIdAndUpdate(id, {name, surname, image, months, parents, parentsMail, parentsPhone}, {new:true})
         .then((child) =>{
             res
               .status(200)

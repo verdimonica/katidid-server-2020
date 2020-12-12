@@ -32,7 +32,6 @@ router.post('/parent', (req, res, next) =>{
           });
       }
     })
-    .catch( (err) => {
 })
 
 // PUT  edit parent by id

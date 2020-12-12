@@ -64,7 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);
 app.use('/api', childRouter);
 app.use('/api', parentRouter);
-app.use('/api/child/:id', eventsRouter);
+app.use('/api', eventsRouter);
 
 
 // ERROR HANDLING
