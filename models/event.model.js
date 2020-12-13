@@ -9,7 +9,7 @@ const eventSchema = new Schema(
         meal: {type: Boolean},
         comment: {type: String},
         date: {type: Date, default: Date.now},
-        child: {type: Schema.Types.ObjectId, ref:"Child"}
+        childId: {type: Schema.Types.ObjectId, ref:"Child"}
     }
 )
 
