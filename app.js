@@ -10,7 +10,9 @@ const cors = require('cors');
 require('dotenv').config();
 
 const authRouter = require('./routes/auth.router');
-
+const childRouter = require('./routes/child.router');
+const eventsRouter = require('./routes/events.router');
+const parentRouter = require('./routes/parent.router');
 
 // MONGOOSE CONNECTION
 mongoose
@@ -60,7 +62,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ROUTER MIDDLEWARE
 app.use('/auth', authRouter);
-
+app.use('/api', childRouter);
+app.use('/api', parentRouter);
+app.use('/api', eventsRouter);
 
 
 // ERROR HANDLING
