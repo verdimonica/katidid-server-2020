@@ -5,8 +5,8 @@ const router = express.Router();
 const Event = require('./../models/event.model');
 
 //POST '/api/child/:id/events' create an event in a child
-router.post('/event', (req, res, next) =>{
-
+router.post('/child/:id/events', (req, res, next) =>{
+    const {id} = req.params;
     const {pampersBrown, pampersBlue, nap, meal, comment, date, childId} = req.body;
     Event.create({pampersBrown, pampersBlue, nap, meal, comment, date, childId})
     .then((createdEvent) =>{
